@@ -13,7 +13,7 @@ import Paper from '@mui/material/Paper';
 export default function OrdersTable() {
   const [orders, setOrders] = useState([]);
   
-  // Fetch users on component mount
+  // Fetch orders on component mount
   useEffect(() => {
     fetchOrders();
   }, []);
@@ -23,12 +23,16 @@ export default function OrdersTable() {
     try {
       const response = await fetch('http://localhost:8000/orders');
       const data = await response.json();
-      console.log(data)
       setOrders(data);
     } catch (error) {
       console.error('Error fetching orders:', error);
     }
   };
+
+  const handleClick = (event, id) => {
+    
+    console.log(id);
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -40,12 +44,15 @@ export default function OrdersTable() {
             <TableCell align="right">Order</TableCell>
             <TableCell align="right">Ordered</TableCell>
             <TableCell align="right">Results Sent</TableCell>
+            <TableCell align="right">Requested by</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {orders.map((row) => (
             <TableRow
+              hover
               key={row._id}
+              onClick={(event) => handleClick(event, row._id)}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
@@ -55,6 +62,7 @@ export default function OrdersTable() {
               <TableCell align="right">{row.searchname}</TableCell>
               <TableCell align="right">{row.ordered}</TableCell>
               <TableCell align="right">{row.resultsent}</TableCell>
+              <TableCell align="right">{row.requestedby}</TableCell>
             </TableRow>
           ))}
         </TableBody>
