@@ -1,0 +1,1 @@
+export const OPEN_ORDER_DIALOG = 'OPEN_ORDER_DIALOG';
