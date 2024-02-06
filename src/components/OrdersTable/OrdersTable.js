@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import OrderModal from './OrderModal';
+import OrderModal from '../OrderModal/OrderModal';
 
 import OpenOrderDialog from "../../actions/Actions";
 import OrderReducer from "../../reducers/OrderReducer"
@@ -54,11 +54,11 @@ export default function OrdersTable() {
           <TableHead>
             <TableRow>
               <TableCell>Reference</TableCell>
-              <TableCell align="right">Requested</TableCell>
-              <TableCell align="right">Order</TableCell>
-              <TableCell align="right">Ordered</TableCell>
-              <TableCell align="right">Results Sent</TableCell>
-              <TableCell align="right">Requested by</TableCell>
+              <TableCell>Requested</TableCell>
+              <TableCell>Order</TableCell>
+              <TableCell>Ordered</TableCell>
+              <TableCell>Results Sent</TableCell>
+              <TableCell>Requested by</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -72,11 +72,11 @@ export default function OrdersTable() {
                 <TableCell component="th" scope="row">
                   {row.ref}
                 </TableCell>
-                <TableCell align="right">{row.requested}</TableCell>
-                <TableCell align="right">{row.searchName}</TableCell>
-                <TableCell align="right">{row.ordered}</TableCell>
-                <TableCell align="right">{row.resultSent}</TableCell>
-                <TableCell align="right">{row.requestedBy}</TableCell>
+                <TableCell>{new Date(Date.parse(row.requested)).toLocaleString()}</TableCell>
+                <TableCell>{row.searchName}</TableCell>
+                <TableCell>{new Date(Date.parse(row.ordered)).toLocaleString()}</TableCell>
+                <TableCell>{new Date(Date.parse(row.resultSent)).toLocaleString()}</TableCell>
+                <TableCell>{row.requestedBy}</TableCell>
               </TableRow>
             ))}
           </TableBody>

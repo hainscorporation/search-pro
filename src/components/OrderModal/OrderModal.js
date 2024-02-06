@@ -60,53 +60,66 @@ export default function OrderModal({orderId, isOpen, handleClose}) {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
+        <Box sx={{ ...style }}>
           <h2 id="parent-modal-title">Ref: {selectedOrder.ref} {selectedOrder.searchName}</h2>
-          <label id="parent-modal-description">
-            Requested by:
-          </label>
-          <label>{selectedOrder.requestedBy}</label>
+          <div>
+            <label className='order-modal-text-label'>
+              Requested by:
+            </label>
+            <label>{selectedOrder.requestedBy}</label>
+          </div>
 
-          {selectedOrder.buyers 
-          ? 
-            selectedOrder.buyers.map((o) => (
-              <>
-                <label id="parent-modal-description">
-                  Buyer:
-                </label>
-                <label>{o.name}</label>
-              </>
-            )) 
-            : null
-          }
+          <div>
+            {selectedOrder.buyers 
+            ? 
+              selectedOrder.buyers.map((o) => (
+                <>
+                  <label className='order-modal-text-label'>
+                    Buyer:
+                  </label>
+                  <label>{o.name}</label>
+                </>
+              )) 
+              : null
+            }
+          </div>
+        
+          <div>
+            {selectedOrder.sellers 
+            ? 
+              selectedOrder.sellers.map((o) => (
+                <>
+                  <label className='order-modal-text-label'>
+                    Seller:
+                  </label>
+                  <label>{o.name}</label>
+                </> 
+              ))
+              : null
+            }
+          </div>
 
-          {selectedOrder.sellers 
-          ? 
-            selectedOrder.sellers.map((o) => (
-              <>
-                <label id="parent-modal-description">
-                  Seller:
-                </label>
-                <label>{o.name}</label>
-              </> 
-            ))
-            : null
-          }
+          <div>
+            <label className='order-modal-text-label'>
+              Property: 
+            </label>
+            <label>{selectedOrder.propertyAddress}</label>
 
-          <label id="parent-modal-description">
-            Property:
-          </label>
-          <label>{selectedOrder.propertyAddress}</label>
+          </div>
 
-          <label id="parent-modal-description">
-            Lot on Plan:
-          </label>
-          <label>{selectedOrder.lot}/{selectedOrder.planType}{selectedOrder.plan}</label>
+          <div>
+            <label className='order-modal-text-label'>
+              Lot on Plan:
+            </label>
+            <label>{selectedOrder.lot}/{selectedOrder.planType}{selectedOrder.plan}</label>
+          </div>
 
-          <label id="parent-modal-description">
-            Price:
-          </label>
-          <label>{selectedOrder.price}</label>
+          <div>
+            <label className='order-modal-text-label'>
+              Price:
+            </label>
+            <label>{selectedOrder.price}</label>
+          </div>
 
         </Box>
       </Modal>
