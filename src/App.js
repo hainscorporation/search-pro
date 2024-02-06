@@ -1,5 +1,5 @@
 import './App.css';
-import OrdersTable from './components/OrdersTable/orders-table'
+import OrdersTable from './components/OrdersTable/OrdersTable'
 
 function App() {
   return <OrdersTable /> 
