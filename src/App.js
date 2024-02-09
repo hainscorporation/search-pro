@@ -1,29 +1,26 @@
-import './App.css';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import OrdersTable from './components/OrdersTable/OrdersTable'
+import "./App.css";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Home from "./components/pages/home/Home";
 
 const theme = createTheme({
   pallete: {
     text: {
-      primary: 'rgb(93, 108, 116)'
-    }
+      primary: "rgb(93, 108, 116)",
+    },
   },
   typography: {
-    fontFamily: [
-      'Nunito',
-      'sans-serif'
-    ].join(','),
-  }
+    fontFamily: ["Nunito", "sans-serif"].join(","),
+  },
 });
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-        <div className="App">
-          <OrdersTable /> 
-        </div>
-      </ThemeProvider>
-  )
+      <div className="App">
+        <Home />
+      </div>
+    </ThemeProvider>
+  );
 }
 
 export default App;

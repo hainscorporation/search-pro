@@ -116,10 +116,8 @@ export default function OrderModal({ orderId, isOpen, handleClose }) {
                 <label className="order-modal-text-label">Price: {selectedOrder.price}</label>
               </div>
             </div>
-            <Stack
+            <div
               className="order-modal-actions-bar"
-              spacing={2}
-              direction="row"
             >
               <Button
                 variant="outlined"
@@ -139,7 +137,7 @@ export default function OrderModal({ orderId, isOpen, handleClose }) {
                   ? `SENT ${dateFormatter(selectedOrder.resultSent)}`
                   : 'SEND RESULTS TO CLIENT'}
               </Button>
-            </Stack>
+            </div>
           </div>
         </Box>
       </Modal>
