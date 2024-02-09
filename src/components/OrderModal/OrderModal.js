@@ -1,126 +1,146 @@
-import React, { useReducer, useEffect, useState } from 'react';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+import React, { useReducer, useEffect, useState } from "react";
+import axios from "axios";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Stack from "@mui/material/Stack";
 
-import OrderReducer from "../../reducers/OrderReducer"
-import OpenOrderDialog from '../../actions/Actions';
+import "./OrderModal.css";
 
-const initalState = { isOpen: true }
+import OrderReducer from "../../reducers/OrderReducer";
+import { dateFormatter } from "../../utils/formatDates";
 
-export default function OrderModal({orderId, isOpen, handleClose}) {
+const initalState = { isOpen: true };
 
-  const [state, dispatch] = useReducer(OrderReducer, initalState)
+export default function OrderModal({ orderId, isOpen, handleClose }) {
+  const [state, dispatch] = useReducer(OrderReducer, initalState);
   //const { isOpen } = state
 
   const [open, setOpen] = useState(isOpen);
-  const [selectedOrder, setSelectedOrder] = useState({})
-/*   const handleClickOpen = () => {
-    setOpen(true);
-  }; */
+  const [selectedOrder, setSelectedOrder] = useState({});
 
   useEffect(() => {
     fetchOrderById(orderId);
   }, [orderId]);
 
   useEffect(() => {
-    setOpen(isOpen)
+    setOpen(isOpen);
   }, [isOpen]);
 
   // GET order by id
   const fetchOrderById = async (orderId) => {
     try {
-      const response = await fetch(`http://localhost:8000/orders/${orderId}`)
-      const data = await response.json()
-      setSelectedOrder(data)
+      const response = await fetch(`http://localhost:8000/orders/${orderId}`);
+      const data = await response.json();
+      setSelectedOrder(data);
     } catch (error) {
-      console.error(`Error fetching the order with id: ${orderId}`, error)
+      console.error(`Error fetching the order with id: ${orderId}`, error);
+    }
+  };
+
+  // UPDATE order field
+  const updateOrderField = async (orderId, body) => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:8000/orders/${orderId}`,
+        body
+      );
+      /* const data = await response.json();
+      console.log(data); */
+    } catch (error) {
+      console.error(`Error updating order field with id: ${orderId}`, error);
     }
   };
 
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)"
   };
 
-  
+  const handleOrderedClick = () => {
+    const now = new Date().toISOString();
+    updateOrderField(orderId, { ordered: now });
+  };
+
+  const handleResultSentClick = () => {
+    const now = new Date().toISOString();
+    updateOrderField(orderId, { resultSent: now });
+  };
+
   return (
     <React.Fragment>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style }}>
-          <h2 id="parent-modal-title">Ref: {selectedOrder.ref} {selectedOrder.searchName}</h2>
-          <div>
-            <label className='order-modal-text-label'>
-              Requested by:
-            </label>
-            <label>{selectedOrder.requestedBy}</label>
+        <Box className='order-modal-container' sx={{ ...style }}>
+          <div className="order-modal-top-bar">
+            Ref: {selectedOrder.ref}
           </div>
+          <div className="order-modal-inner">
+            <div className="order-modal-info">
+              <h2 id="parent-modal-title">
+                {selectedOrder.searchName}
+              </h2>
+              <div>
+                <label className="order-modal-text-label">Requested by: {selectedOrder.requestedBy}</label>
+              </div>
 
-          <div>
-            {selectedOrder.buyers 
-            ? 
-              selectedOrder.buyers.map((o) => (
-                <>
-                  <label className='order-modal-text-label'>
-                    Buyer:
-                  </label>
-                  <label>{o.name}</label>
-                </>
-              )) 
-              : null
-            }
+              <div className="order-modal-list">
+                {selectedOrder.buyers
+                  ? selectedOrder.buyers.map((o) => (
+                      <label className="order-modal-text-label">Buyer: {o.name}</label>
+                    ))
+                  : null}
+              </div>
+
+              <div className="order-modal-list">
+                {selectedOrder.sellers
+                  ? selectedOrder.sellers.map((o) => (
+                      <label className="order-modal-text-label">Seller: {o.name}</label>
+                    ))
+                  : null}
+              </div>
+
+              <div>
+                <label className="order-modal-text-label">Property: {selectedOrder.propertyAddress}</label>
+              </div>
+
+              <div>
+                <label className="order-modal-text-label">Lot on Plan: {selectedOrder.lot}/{selectedOrder.planType}{selectedOrder.plan}</label>
+              </div>
+
+              <div>
+                <label className="order-modal-text-label">Price: {selectedOrder.price}</label>
+              </div>
+            </div>
+            <Stack
+              className="order-modal-actions-bar"
+              spacing={2}
+              direction="row"
+            >
+              <Button
+                variant="outlined"
+                onClick={handleOrderedClick}
+                disabled={!!selectedOrder.ordered}
+              >
+                {selectedOrder.ordered
+                  ? `ORDERED ${dateFormatter(selectedOrder.ordered)}`
+                  : 'MARK ORDERED'}
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={handleResultSentClick}
+                disabled={!selectedOrder.ordered || !!selectedOrder.resultSent}
+              >
+                {selectedOrder.resultSent
+                  ? `SENT ${dateFormatter(selectedOrder.resultSent)}`
+                  : 'SEND RESULTS TO CLIENT'}
+              </Button>
+            </Stack>
           </div>
-        
-          <div>
-            {selectedOrder.sellers 
-            ? 
-              selectedOrder.sellers.map((o) => (
-                <>
-                  <label className='order-modal-text-label'>
-                    Seller:
-                  </label>
-                  <label>{o.name}</label>
-                </> 
-              ))
-              : null
-            }
-          </div>
-
-          <div>
-            <label className='order-modal-text-label'>
-              Property: 
-            </label>
-            <label>{selectedOrder.propertyAddress}</label>
-
-          </div>
-
-          <div>
-            <label className='order-modal-text-label'>
-              Lot on Plan:
-            </label>
-            <label>{selectedOrder.lot}/{selectedOrder.planType}{selectedOrder.plan}</label>
-          </div>
-
-          <div>
-            <label className='order-modal-text-label'>
-              Price:
-            </label>
-            <label>{selectedOrder.price}</label>
-          </div>
-
         </Box>
       </Modal>
     </React.Fragment>
