@@ -9,8 +9,8 @@ import Paper from '@mui/material/Paper';
 
 import OrderModal from '../OrderModal/OrderModal';
 
-import OpenOrderDialog from "../../actions/Actions";
 import OrderReducer from "../../reducers/OrderReducer"
+import { dateFormatter } from '../../utils/formatDates';
 
 const initalState = { isOpen: false }
 
@@ -72,10 +72,10 @@ export default function OrdersTable() {
                 <TableCell component="th" scope="row">
                   {row.ref}
                 </TableCell>
-                <TableCell>{new Date(Date.parse(row.requested)).toLocaleString()}</TableCell>
+                <TableCell>{row.requested ? dateFormatter(row.requested): ''}</TableCell>
                 <TableCell>{row.searchName}</TableCell>
-                <TableCell>{new Date(Date.parse(row.ordered)).toLocaleString()}</TableCell>
-                <TableCell>{new Date(Date.parse(row.resultSent)).toLocaleString()}</TableCell>
+                <TableCell>{row.ordered ? dateFormatter(row.ordered) : ''}</TableCell>
+                <TableCell>{row.resultSent ? dateFormatter(row.resultSent) : ''}</TableCell>
                 <TableCell>{row.requestedBy}</TableCell>
               </TableRow>
             ))}
