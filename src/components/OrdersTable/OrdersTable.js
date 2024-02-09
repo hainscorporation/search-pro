@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react';
+import './OrdersTable.css'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -49,9 +50,9 @@ export default function OrdersTable() {
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer className='orders-table-container' component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+          <TableHead className='orders-table-head'>
             <TableRow>
               <TableCell>Reference</TableCell>
               <TableCell>Requested</TableCell>
@@ -61,7 +62,7 @@ export default function OrdersTable() {
               <TableCell>Requested by</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody className='orders-table-body'>
             {orders.map((row) => (
               <TableRow
                 hover

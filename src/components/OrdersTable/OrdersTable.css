@@ -1,0 +1,11 @@
+.orders-table-container .orders-table-body > * {
+	cursor: pointer !important;
+}
+
+.orders-table-container .orders-table-head {
+	background-color: rgb(249, 251, 250);
+}
+
+.orders-table-container .orders-table-head th {
+	font-weight: 600;
+}

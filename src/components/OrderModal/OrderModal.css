@@ -1,0 +1,31 @@
+.order-modal-container {
+  width: 950px;
+  height: 600px;
+  background: rgb(255, 255, 255);
+  border-radius: 16px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 20px 0px;
+}
+
+.order-modal-inner {
+  margin: 32px;
+}
+
+.order-modal-actions-bar {
+  margin: 1em 0;
+}
+
+.order-modal-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-modal-top-bar {
+  display: flex;
+  background: rgb(249, 251, 250);
+  border-bottom: 1px solid #b8c4c2;
+  border-radius: 16px 16px 0 0;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+}
