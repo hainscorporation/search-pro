@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useMemo } from 'react';
 import './OrdersTable.css'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -48,6 +48,13 @@ export default function OrdersTable() {
     setOrderDailogOpen(false)
   }
 
+  const OrderModalMemo = useMemo(() => {
+    if (orderDialogOpen) {
+      return <OrderModal orderId={selectedOrderId} isOpen={orderDialogOpen} handleClose={handleDialogClose} />;
+    }
+    return null;
+  }, [orderDialogOpen, selectedOrderId]);
+
   return (
     <>
       <TableContainer className='orders-table-container' component={Paper}>
@@ -83,7 +90,7 @@ export default function OrdersTable() {
           </TableBody>
         </Table>
       </TableContainer>
-      <OrderModal orderId={selectedOrderId} isOpen={orderDialogOpen} handleClose={handleDialogClose} />
+      {OrderModalMemo}
     </>
   );
 }
