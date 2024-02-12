@@ -1,0 +1,12 @@
+.lot-validation-form {
+  display: flex;
+  justify-content: center;
+}
+
+.lot-validation-form-field {
+	margin: 0 .5em;
+}
+
+.lot-validation-form-field lot {
+	flex: 2 1 auto;
+}
