@@ -1,6 +1,8 @@
 import "./App.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./components/pages/home/Home";
+import Client from "./components/pages/clientView/client/client";
 
 const theme = createTheme({
   pallete: {
@@ -15,11 +17,16 @@ const theme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <Home />
-      </div>
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<Home />}/>
+            <Route path="/client" element={<Client />}/>
+          </Routes>
+        </div>
+      </ThemeProvider>
+    </Router>
   );
 }
 
