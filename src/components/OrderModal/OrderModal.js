@@ -91,7 +91,7 @@ export default function OrderModal({ orderId, isOpen, handleClose }) {
               <div className="order-modal-list">
                 {selectedOrder.buyers
                   ? selectedOrder.buyers.map((o) => (
-                      <label className="order-modal-text-label">Buyer: {o.name}</label>
+                      <label key={o.name} className="order-modal-text-label">Buyer: {o.name}</label>
                     ))
                   : null}
               </div>
@@ -99,7 +99,7 @@ export default function OrderModal({ orderId, isOpen, handleClose }) {
               <div className="order-modal-list">
                 {selectedOrder.sellers
                   ? selectedOrder.sellers.map((o) => (
-                      <label className="order-modal-text-label">Seller: {o.name}</label>
+                      <label key={o.name} className="order-modal-text-label">Seller: {o.name}</label>
                     ))
                   : null}
               </div>
