@@ -2,7 +2,7 @@ import "./App.css";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from "./components/pages/home/Home";
-import Client from "./components/pages/clientView/client/client";
+import Client from "./components/pages/clientView/Client/Client";
 
 const theme = createTheme({
   pallete: {
