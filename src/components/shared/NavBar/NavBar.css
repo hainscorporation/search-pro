@@ -1,0 +1,15 @@
+.navigation-bar {
+	display: flex;
+	width: 100%;
+	height: 40px;
+	background-color: #023e5c;
+	padding: 1rem;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0;
+}
+
+.navigation-bar-title-text {
+	color: #fff;
+	font-weight: 900;
+}

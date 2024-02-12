@@ -58,7 +58,7 @@ export default function OrdersTable() {
   return (
     <>
       <TableContainer className='orders-table-container' component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table aria-label="simple table">
           <TableHead className='orders-table-head'>
             <TableRow>
               <TableCell>Reference</TableCell>

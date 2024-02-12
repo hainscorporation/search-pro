@@ -1,15 +1,15 @@
-import './Home.css'
-import OrdersTable from '../../OrdersTable/OrdersTable'
+import "./Home.css";
+import OrdersTable from "../../OrdersTable/OrdersTable";
 
 const Home = () => {
-	return (
-		<>
-			<div className='search-bar'>
-				<h1>SEARCH PRO</h1>
-			</div>
-			<OrdersTable className='orders-table' /> 
-		</>
-	)
-}
+  return (
+    <div className="agent-view">
+      <div className="search-bar">
+        
+      </div>
+      <OrdersTable className="orders-table" />
+    </div>
+  );
+};
 
 export default Home;
