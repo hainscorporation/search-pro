@@ -1,7 +1,7 @@
 const OrderReducer = (state, action) => {
   switch (action.type) {
-    case 'OPEN_ORDER_DIALOG':
-      return { ...state, isOpen: action.payload }
+    case 'SHOW_ALL_ORDERS':
+      return { ...state, showOrders: action.payload }
     default:
       return state
   }

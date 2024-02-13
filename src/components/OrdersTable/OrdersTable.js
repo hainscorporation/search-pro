@@ -11,14 +11,10 @@ import TablePagination from '@mui/material/TablePagination';
 import OrderModal from '../OrderModal/OrderModal';
 import SortingTableHead from './SortingTableHead/SortingTableHead';
 
-import OrderReducer from "../../reducers/OrderReducer"
 import { dateFormatter } from '../../utils/formatDates';
 import { stableSort, getComparator } from '../../utils/sort';
 
-const initalState = { isOpen: false }
-
 export default function OrdersTable() {
-  const [state, dispatch] = useReducer(OrderReducer, initalState)
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortBy, setSortBy] = useState('requested');
   const [page, setPage] = useState(0);

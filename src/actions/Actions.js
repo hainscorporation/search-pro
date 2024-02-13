@@ -1,8 +1,9 @@
-import { OPEN_ORDER_DIALOG } from "../constants/action-types";
+import { SHOW_ALL_ORDERS } from "../constants/action-types";
 
-const OpenOrderDialog = (payload) => {
-  return { type: OPEN_ORDER_DIALOG, payload }
+
+const ShowAllOrders = (payload) => {
+  return { type: SHOW_ALL_ORDERS, payload }
 }
 
-export default OpenOrderDialog;
+export { ShowAllOrders }
 

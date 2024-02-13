@@ -1,1 +1,1 @@
-export const OPEN_ORDER_DIALOG = 'OPEN_ORDER_DIALOG';
+export const SHOW_ALL_ORDERS = 'SHOW_ALL_ORDERS';

@@ -3,19 +3,14 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Stack from "@mui/material/Stack";
 
 import "./OrderModal.css";
 
-import OrderReducer from "../../reducers/OrderReducer";
 import { dateFormatter } from "../../utils/formatDates";
 
 const initalState = { isOpen: true };
 
 export default function OrderModal({ orderId, isOpen, handleClose }) {
-  const [state, dispatch] = useReducer(OrderReducer, initalState);
-  //const { isOpen } = state
-
   const [open, setOpen] = useState(isOpen);
   const [selectedOrder, setSelectedOrder] = useState({});
 
