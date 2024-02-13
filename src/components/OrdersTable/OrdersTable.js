@@ -53,7 +53,7 @@ export default function OrdersTable() {
   // GET all orders
   const fetchOrders = async () => {
     try {
-      const response = await fetch('http://localhost:8000/orders')
+      const response = await fetch('http://localhost:8000/filtered-orders')
       const data = await response.json()
       setOrders(data)
     } catch (error) {
@@ -102,7 +102,6 @@ export default function OrdersTable() {
                 key={row._id}
                 tabIndex={-1}
                 onClick={(event) => handleOrderClick(event, row._id)}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
                   {row.ref}
