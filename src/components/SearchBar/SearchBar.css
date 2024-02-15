@@ -1,3 +1,10 @@
 .search-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between;
   margin: 10px 0;
+}
+
+.search-bar-field {
+  width: 33%;
 }

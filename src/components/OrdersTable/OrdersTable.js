@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useReducer, useMemo } from 'react';
-import './OrdersTable.css'
+import React, { useState, useEffect, useContext, useMemo } from 'react';
+import axios from "axios";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,13 +8,19 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
 
+import { Context } from '../../store/Store'
 import OrderModal from '../OrderModal/OrderModal';
 import SortingTableHead from './SortingTableHead/SortingTableHead';
 
 import { dateFormatter } from '../../utils/formatDates';
 import { stableSort, getComparator } from '../../utils/sort';
+import './OrdersTable.css'
 
 export default function OrdersTable() {
+
+  const [state, dispatch] = useContext(Context)
+  const { showAllOrders, searchTerm } = state
+
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortBy, setSortBy] = useState('requested');
   const [page, setPage] = useState(0);
@@ -28,12 +34,17 @@ export default function OrdersTable() {
     fetchOrders();
   }, []);
 
-  const OrderModalMemo = useMemo(() => {
-    if (orderDialogOpen) {
-      return <OrderModal orderId={selectedOrderId} isOpen={orderDialogOpen} handleClose={handleDialogClose} />;
+  useEffect(() => {
+    fetchOrders();
+  }, [showAllOrders])
+
+  useEffect(() => {
+    if (searchTerm === '') {
+      fetchOrders() 
+    } else {
+      fetchFilteredOrdersByTerm({ searchTerm: searchTerm });
     }
-    return null;
-  }, [orderDialogOpen, selectedOrderId]);
+  }, [searchTerm])
 
   const visibleRows = useMemo(
     () =>
@@ -46,16 +57,30 @@ export default function OrdersTable() {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
 
-  // GET all orders
+  // GET all orders list
   const fetchOrders = async () => {
+    const url = showAllOrders ? 'orders' : 'filtered-orders'
+
     try {
-      const response = await fetch('http://localhost:8000/filtered-orders')
+      const response = await fetch(`http://localhost:8000/${url}`)
       const data = await response.json()
       setOrders(data)
     } catch (error) {
       console.error('Error fetching orders:', error)
     }
   };
+
+    // GET all orders
+    const fetchFilteredOrdersByTerm = async (body) => {
+      try {
+        const response = await axios.post(`http://localhost:8000/orders-by-reference`, body)
+        console.log(response.data)
+        const data = await response.data
+        setOrders(data)
+      } catch (error) {
+        console.error('Error fetching orders:', error)
+      }
+    };
 
   const handleRequestSort = (event, property) => {
     const isAsc = sortBy === property && sortOrder === 'asc';
@@ -72,6 +97,13 @@ export default function OrdersTable() {
   const handleDialogClose = () => {
     setOrderDailogOpen(false)
   }
+
+  const OrderModalMemo = useMemo(() => {
+    if (orderDialogOpen) {
+      return <OrderModal orderId={selectedOrderId} isOpen={orderDialogOpen} handleClose={handleDialogClose} />;
+    }
+    return null;
+  }, [orderDialogOpen, selectedOrderId]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

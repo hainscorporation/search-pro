@@ -104,7 +104,7 @@ export default function OrderModal({ orderId, isOpen, handleClose }) {
               </div>
 
               <div>
-                <label className="order-modal-text-label">Lot on Plan: {selectedOrder.lot}/{selectedOrder.planType}{selectedOrder.plan}</label>
+                <label className="order-modal-text-label">Lot on Plan: {selectedOrder.lotonplan}</label>
               </div>
 
               <div>
