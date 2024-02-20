@@ -56,12 +56,12 @@ export default function OrderModal({ orderId, isOpen, handleClose }) {
 
   const handleOrderedClick = () => {
     const now = new Date().toISOString();
-    updateOrderField(orderId, { ordered: now });
+    updateOrderField(orderId, { ordered: now, status: 1 });
   };
 
   const handleResultSentClick = () => {
     const now = new Date().toISOString();
-    updateOrderField(orderId, { resultSent: now });
+    updateOrderField(orderId, { resultSent: now, status: 2 });
   };
 
   return (
@@ -117,7 +117,7 @@ export default function OrderModal({ orderId, isOpen, handleClose }) {
               <Button
                 variant="outlined"
                 onClick={handleOrderedClick}
-                disabled={!!selectedOrder.ordered}
+                disabled={selectedOrder.status !== 0}
               >
                 {selectedOrder.ordered
                   ? `ORDERED ${dateFormatter(selectedOrder.ordered)}`
@@ -126,7 +126,7 @@ export default function OrderModal({ orderId, isOpen, handleClose }) {
               <Button
                 variant="outlined"
                 onClick={handleResultSentClick}
-                disabled={!selectedOrder.ordered || !!selectedOrder.resultSent}
+                disabled={selectedOrder.status === 0 || selectedOrder.status === 2 }
               >
                 {selectedOrder.resultSent
                   ? `SENT ${dateFormatter(selectedOrder.resultSent)}`

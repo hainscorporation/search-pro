@@ -23,6 +23,10 @@ const headCells = [
     id: 'requestedBy',
     label: 'Requested by',
   },
+  {
+    id: 'status',
+    label: 'Status'
+  },
 ];
 
 export { headCells };

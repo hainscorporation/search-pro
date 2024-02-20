@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TablePagination from '@mui/material/TablePagination';
+import Chip from '@mui/material/Chip';
 
 import { Context } from '../../store/Store'
 import OrderModal from '../OrderModal/OrderModal';
@@ -14,12 +15,14 @@ import SortingTableHead from './SortingTableHead/SortingTableHead';
 
 import { dateFormatter } from '../../utils/formatDates';
 import { stableSort, getComparator } from '../../utils/sort';
+
+import { STATUS_MAP } from '../../constants/status';
 import './OrdersTable.css'
 
 export default function OrdersTable() {
 
   const [state, dispatch] = useContext(Context)
-  const { showAllOrders, searchTerm } = state
+  const { showAllOrders, searchTerm } = state.OrderReducer
 
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortBy, setSortBy] = useState('requested');
@@ -139,6 +142,9 @@ export default function OrdersTable() {
                 <TableCell>{row.ordered ? dateFormatter(row.ordered) : ''}</TableCell>
                 <TableCell>{row.resultSent ? dateFormatter(row.resultSent) : ''}</TableCell>
                 <TableCell>{row.requestedBy}</TableCell>
+                <TableCell>
+                  <Chip color={STATUS_MAP[row.status].color} label={STATUS_MAP[row.status].text} variant="filled" />
+                </TableCell>
               </TableRow>
             ))}
             {emptyRows > 0 && (
