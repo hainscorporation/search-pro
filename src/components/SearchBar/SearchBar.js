@@ -35,7 +35,7 @@ const SearchBar = () => {
         label="Search field"
         type="search"
         variant="filled"
-        placeholder='Search Order by Reference'
+        placeholder='Search Order by Reference, Client or Lot on Plan'
         onChange={debounceHandler}
         onInput={debounceHandler}
       />
