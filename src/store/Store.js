@@ -1,17 +1,33 @@
 import React, { useReducer, createContext, useEffect } from 'react';
-import OrderReducer from '../reducers/OrderReducer';
+import reducers from '../reducers/reducers'
 
-const initialState = { showAllOrders: false, searchTerm: '' };
+const initialState = {
+  OrderReducer: {
+    showAllOrders: false,
+    searchTerm: '',
+  },
+  FormReducer: {
+    lotonplan: ''
+  }
+}
 
 const Store = ({ children }) => {
 
-  const [state, dispatch] = useReducer(OrderReducer, initialState);
+  const rootReducer = reducers => (state, action) => {
+    let newState = {};
+    for (let key in reducers) {
+      newState[key] = reducers[key](state[key], action);
+    }
+    return newState;
+  };
+
+  const [state, dispatch] = useReducer(rootReducer(reducers), initialState);
 
   // check the updated state
-  /* useEffect(() => {
+/*   useEffect(() => {
     console.log(state);
-  }, [state]) */
-
+  }, [state])
+ */
   return (
     <Context.Provider value={[state, dispatch]}>
       {children}

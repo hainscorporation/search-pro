@@ -9,4 +9,13 @@ const OrderReducer = (state, action) => {
   }
 }
 
-export default OrderReducer
+const FormReducer = (state, action) => {
+  switch (action.type) { 
+    case 'VALIDATE_LOT_ON_PLAN':
+      return  { ...state, lotonplan: action.payload }
+    default:
+      return state
+  }
+}
+
+export default { OrderReducer, FormReducer }

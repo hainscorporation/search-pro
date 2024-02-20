@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -7,19 +8,47 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import LotValidationForm from '../LotValidationForm/LotValidationForm';
+import { Context } from '../../store/Store';
+import { ValidateLotOnPlan } from '../../actions/Actions';
 
 import './ClientStepper.css'
 
 const steps = ['Validate Lot on Plan', 'Select desired searches', 'Fill out property information'];
 
 const ClientStepper = () => {
+  const [state, dispatch] = useContext(Context)
+  const { lotonplan } =  state.FormReducer
 	const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
 
+  useEffect(() => {
+    const [lot, plan] = lotonplan.split('/')
+    const body = {
+      lot: lot,
+      plan: plan
+    }
+    validateLotOnPlanExists(body)
+  }, [lotonplan])
+
   const renderStep = (step) => {
     if (step === 0) {
-      return <LotValidationForm> </LotValidationForm>
+      return <LotValidationForm onSubmitForm={onSubmitForm} /> 
     }
+  }
+
+  const validateLotOnPlanExists = async (body) => {
+    try {
+      const response = await axios.post(`http://localhost:8000/validate-lot-plan`, body)
+      console.log(response.data)
+      const data = await response.data
+    } catch (error) {
+      console.error('Error processing request, please check the format of the lot on plan entered:', error)
+    }
+  }
+
+  const onSubmitForm = (event, lotOnPlan) => {
+    event.preventDefault()
+    dispatch(ValidateLotOnPlan(lotOnPlan))
   }
 
 	const handleNext = () => {

@@ -1,4 +1,4 @@
-import { SHOW_ALL_ORDERS, ORDER_SEARCH_TERM } from "../constants/action-types";
+import { SHOW_ALL_ORDERS, ORDER_SEARCH_TERM, VALIDATE_LOT_ON_PLAN } from "../constants/action-types";
 
 const ShowAllOrders = (payload) => {
   return { type: SHOW_ALL_ORDERS, payload }
@@ -7,5 +7,9 @@ const ShowAllOrders = (payload) => {
 const SearchOrderByTerm = (payload) => {
   return { type: ORDER_SEARCH_TERM, payload }
 }
-export { ShowAllOrders, SearchOrderByTerm }
+
+const ValidateLotOnPlan = (payload) => {
+  return { type: VALIDATE_LOT_ON_PLAN, payload }
+}
+export { ShowAllOrders, SearchOrderByTerm, ValidateLotOnPlan }
 
