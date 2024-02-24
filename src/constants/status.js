@@ -1,4 +1,4 @@
-export const STATUS_MAP = {
+const STATUS_MAP = {
   '0': {
     code: 0,
     text: 'New',
@@ -15,4 +15,21 @@ export const STATUS_MAP = {
     color: 'success'
   }
 }
+
+const STATUS_ARRAY = [
+  {
+    code: 0,
+    text: 'New'
+  },
+  {
+    code: 1,
+    text: 'Ordered'
+  },
+  {
+    code: 2,
+    text: 'Completed'
+  }
+]
+
+export { STATUS_ARRAY, STATUS_MAP }
 

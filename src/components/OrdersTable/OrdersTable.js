@@ -22,7 +22,7 @@ import './OrdersTable.css'
 export default function OrdersTable() {
 
   const [state, dispatch] = useContext(Context)
-  const { showAllOrders, searchTerm } = state.OrderReducer
+  const { showAllOrders, searchTerm, selectedStatus } = state.OrderReducer
 
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortBy, setSortBy] = useState('requested');
@@ -34,18 +34,22 @@ export default function OrdersTable() {
 
   // Fetch orders on component mount
   useEffect(() => {
-    fetchOrders();
-  }, []);
+    fetchOrders()
+  }, [])
 
   useEffect(() => {
-    fetchOrders();
+    fetchOrders()
   }, [showAllOrders])
+
+  useEffect(() => {
+    filterByStatus({selectedStatus: selectedStatus})
+  }, [selectedStatus])
 
   useEffect(() => {
     if (searchTerm === '') {
       fetchOrders() 
     } else {
-      fetchFilteredOrdersByTerm({ searchTerm: searchTerm });
+      fetchFilteredOrdersByTerm({ searchTerm: searchTerm })
     }
   }, [searchTerm])
 
@@ -73,23 +77,33 @@ export default function OrdersTable() {
     }
   };
 
-    // GET all orders
-    const fetchFilteredOrdersByTerm = async (body) => {
-      try {
-        const response = await axios.post(`http://localhost:8000/orders-by-reference`, body)
-        console.log(response.data)
-        const data = await response.data
-        setOrders(data)
-      } catch (error) {
-        console.error('Error fetching orders:', error)
-      }
-    };
+  // GET all orders
+  const fetchFilteredOrdersByTerm = async (body) => {
+    try {
+      const response = await axios.post(`http://localhost:8000/orders-by-reference`, body)
+      console.log(response.data)
+      const data = await response.data
+      setOrders(data)
+    } catch (error) {
+      console.error('Error fetching orders:', error)
+    }
+  }
+
+  const filterByStatus = async (body) => {
+    try {
+      const response = await axios.post(`http://localhost:8000/orders-by-status`, body)
+      const data = response.data
+      setOrders(data)
+    } catch (error) {
+      console.error('Error fetching orders:', error)
+    }
+  }
 
   const handleRequestSort = (event, property) => {
     const isAsc = sortBy === property && sortOrder === 'asc';
     setSortOrder(isAsc ? 'desc' : 'asc');
     setSortBy(property);
-  };
+  }
 
   const handleOrderClick = (event, id) => {
     // dispatch(OpenOrderDialog(true))

@@ -5,6 +5,7 @@ const initialState = {
   OrderReducer: {
     showAllOrders: false,
     searchTerm: '',
+    selectedStatus: []
   },
   FormReducer: {
     lotonplan: ''

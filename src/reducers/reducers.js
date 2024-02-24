@@ -4,6 +4,8 @@ const OrderReducer = (state, action) => {
       return { ...state, showAllOrders: action.payload }
     case 'ORDER_SEARCH_TERM':
       return  { ...state, searchTerm: action.payload }
+    case 'FILTER_STATUS':
+      return {...state, selectedStatus: action.payload }
     default:
       return state
   }
