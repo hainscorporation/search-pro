@@ -8,12 +8,13 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import LotValidationForm from '../LotValidationForm/LotValidationForm';
+import PropertyDetailsForm from '../PropertyDetailsForm/PropertyDetailsForm';
 import { Context } from '../../store/Store';
-import { ValidateLotOnPlan } from '../../actions/Actions';
+import { SaveLotOnPlan, ValidateLotOnPlan } from '../../actions/Actions';
 
 import './ClientStepper.css'
 
-const steps = ['Validate Lot on Plan', 'Select desired searches', 'Fill out property information'];
+const steps = ['Validate Lot on Plan', 'Fill out property information'];
 
 const ClientStepper = () => {
   const [state, dispatch] = useContext(Context)
@@ -34,6 +35,9 @@ const ClientStepper = () => {
     if (step === 0) {
       return <LotValidationForm onSubmitForm={onSubmitForm} /> 
     }
+    if (step === 1 ) {
+      return <PropertyDetailsForm />
+    }
   }
 
   const validateLotOnPlanExists = async (body) => {
@@ -41,6 +45,9 @@ const ClientStepper = () => {
       const response = await axios.post(`http://localhost:8000/validate-lot-plan`, body)
       console.log(response.data)
       const data = await response.data
+      if (data) {
+        dispatch(SaveLotOnPlan(data))
+      }
     } catch (error) {
       console.error('Error processing request, please check the format of the lot on plan entered:', error)
     }

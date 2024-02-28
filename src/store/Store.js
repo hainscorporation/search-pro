@@ -8,7 +8,8 @@ const initialState = {
     selectedStatus: []
   },
   FormReducer: {
-    lotonplan: ''
+    lotonplan: '',
+    validatedLotOnPlan: {}
   }
 }
 
@@ -25,10 +26,10 @@ const Store = ({ children }) => {
   const [state, dispatch] = useReducer(rootReducer(reducers), initialState);
 
   // check the updated state
-/*   useEffect(() => {
+  useEffect(() => {
     console.log(state);
   }, [state])
- */
+
   return (
     <Context.Provider value={[state, dispatch]}>
       {children}

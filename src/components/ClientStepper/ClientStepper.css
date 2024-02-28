@@ -1,4 +1,6 @@
 .client-stepper {
+	display: flex;
+	justify-content: center;
 	height: 550px;
 	padding: 32px;
 }
@@ -8,6 +10,7 @@
 	flex-direction: column;
 	justify-content: space-between;
 	height: 100%;
+	width: 800px !important;
 }
 
 .client-stepper-button-group {

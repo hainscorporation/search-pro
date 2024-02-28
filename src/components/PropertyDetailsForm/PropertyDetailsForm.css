@@ -1,0 +1,11 @@
+.property-details-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 16px;
+}
+
+.property-details-form-field {
+  margin: 16px !important;
+  width: 300px;
+}
