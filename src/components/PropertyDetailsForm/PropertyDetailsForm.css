@@ -2,10 +2,31 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 16px;
+  margin: 32px;
 }
 
 .property-details-form-field {
   margin: 16px !important;
-  width: 300px;
+  flex-grow: 2;
+}
+
+.property-details-form-field.lg {
+  width: 100%;
+}
+
+.property-details-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+}
+
+.property-details-column {
+  display: flex;
+  flex-grow: 2;
+}
+
+.property-details-title {
+  width: 100%;
 }

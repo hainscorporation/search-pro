@@ -18,7 +18,7 @@ const steps = ['Validate Lot on Plan', 'Fill out property information'];
 
 const ClientStepper = () => {
   const [state, dispatch] = useContext(Context)
-  const { lotonplan } =  state.FormReducer
+  const { lotonplan, validatedLotOnPlan } =  state.FormReducer
 	const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
 
@@ -31,9 +31,13 @@ const ClientStepper = () => {
     validateLotOnPlanExists(body)
   }, [lotonplan])
 
+  useEffect(() => {
+    console.log(validatedLotOnPlan)
+  }, [validatedLotOnPlan])
+
   const renderStep = (step) => {
     if (step === 0) {
-      return <LotValidationForm onSubmitForm={onSubmitForm} /> 
+      return <LotValidationForm onEnterClick={onEnterClick} /> 
     }
     if (step === 1 ) {
       return <PropertyDetailsForm />
@@ -53,7 +57,8 @@ const ClientStepper = () => {
     }
   }
 
-  const onSubmitForm = (event, lotOnPlan) => {
+  const onEnterClick = (event, lotOnPlan) => {
+    console.log('submit')
     event.preventDefault()
     dispatch(ValidateLotOnPlan(lotOnPlan))
   }
@@ -98,21 +103,25 @@ const ClientStepper = () => {
           </React.Fragment>
         ) : (
           <React.Fragment>
-            {renderStep(activeStep)}
-            <Box className="client-stepper-button-group" sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-                type="button"
-              >
-                Back
-              </Button>
+            <Box className='client-stepper-section' component="form" noValidate>
+              <div>
+                {renderStep(activeStep)}
+              </div>
+              <Box className="client-stepper-button-group" sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+                <Button
+                  color="inherit"
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  sx={{ mr: 1 }}
+                  type="button"
+                >
+                  Back
+                </Button>
 
-              <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Submit" : "Next"}
-              </Button>
+                <Button onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? "Submit" : "Next"}
+                </Button>
+              </Box>
             </Box>
           </React.Fragment>
         )}

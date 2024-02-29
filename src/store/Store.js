@@ -26,9 +26,9 @@ const Store = ({ children }) => {
   const [state, dispatch] = useReducer(rootReducer(reducers), initialState);
 
   // check the updated state
-  useEffect(() => {
+  /* useEffect(() => {
     console.log(state);
-  }, [state])
+  }, [state]) */
 
   return (
     <Context.Provider value={[state, dispatch]}>

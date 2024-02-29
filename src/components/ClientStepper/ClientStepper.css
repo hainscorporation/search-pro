@@ -8,9 +8,16 @@
 .client-stepper-container {
 	display: flex;
 	flex-direction: column;
+	height: 70vh;
+	width: 70% !important;
+}
+
+.client-stepper-section {
+	display: flex;
 	justify-content: space-between;
+	padding: 10px;
+	flex-direction: column;
 	height: 100%;
-	width: 800px !important;
 }
 
 .client-stepper-button-group {
