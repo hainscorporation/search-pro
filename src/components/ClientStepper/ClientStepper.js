@@ -33,6 +33,9 @@ const ClientStepper = () => {
 
   useEffect(() => {
     console.log(validatedLotOnPlan)
+    if (validatedLotOnPlan.council) {
+      getAvailableSearches({councilCode: validatedLotOnPlan.council.Code}) 
+    }
   }, [validatedLotOnPlan])
 
   const renderStep = (step) => {
@@ -57,9 +60,18 @@ const ClientStepper = () => {
     }
   }
 
+  const getAvailableSearches = async (body) => {
+    try {
+      const response = await axios.post(`http://localhost:8000/available-searches`, body)
+      console.log(response.data)
+      const data = await response.data
+    } catch (error) {
+      console.error('Error processing request, please check the format of the lot on plan entered:', error)
+    }
+  }
+
   const onEnterClick = (event, lotOnPlan) => {
     console.log('submit')
-    event.preventDefault()
     dispatch(ValidateLotOnPlan(lotOnPlan))
   }
 

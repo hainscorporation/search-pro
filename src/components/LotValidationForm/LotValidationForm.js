@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import { useForm } from 'react-hook-form'; 
@@ -6,17 +5,12 @@ import { useForm } from 'react-hook-form';
 import './LotValidationForm.css'
 
 const LotValidationForm = ({onEnterClick}) => {
-  const [value, setValue] = useState('');
   const { register, formState: { errors } } = useForm({ mode: "all" });
-
-  const handleChange = (event) => {
-    setValue(event.target.value)
-  }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault()
-      onEnterClick(e, value);
+      onEnterClick(e, e.target.value);
     }
   }
 
@@ -24,7 +18,6 @@ const LotValidationForm = ({onEnterClick}) => {
     <Box className="lot-validation-form">
       <TextField 
         error={!!errors.lot}
-        onChange={handleChange}
         onKeyDown={handleKeyDown}
         className="lot-validation-form-field lot" 
         label="Lot on Plan" variant="outlined" 
