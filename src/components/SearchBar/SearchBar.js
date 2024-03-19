@@ -13,7 +13,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 
-import { ShowAllOrders, SearchOrderByTerm, FilterStatus } from '../../actions/Actions';
+import { FilterOrdersList } from '../../actions/Actions';
 import { Context } from '../../store/Store';
 import { STATUS_ARRAY } from '../../constants/status';
 
@@ -21,18 +21,20 @@ import './SearchBar.css';
 
 const SearchBar = () => {
   const [state, dispatch] = useContext(Context)
+  const { filters } = state.OrderReducer
+
   const [checked, setChecked] = useState(false)
   const [searchTerm,  setSearchTerm] = useState('')
   const [status, setStatus] = useState([])
 
   const handleSwitchChange = (event) => {
-    setChecked(event.target.checked)
-    dispatch(ShowAllOrders(event.target.checked))
+    /* setChecked(event.target.checked)
+    dispatch(FilterOrdersList(event.target.checked)) */
   }
   
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value)
-    dispatch(SearchOrderByTerm(event.target.value))
+    dispatch(FilterOrdersList({ ...filters, search: event.target.value }))
   }
 
   const handleChange = (event) => {
@@ -42,7 +44,7 @@ const SearchBar = () => {
   const handleClose = () => {
     const selectedValues = []
     status.forEach((item) => selectedValues.push(STATUS_ARRAY.find((s) => s.text === item).code))
-    dispatch(FilterStatus(selectedValues))
+    dispatch(FilterOrdersList({ ...filters, status: selectedValues }))
   }
 
   // Debouncing the search term to avoid unnecessary API calls when typing in the input

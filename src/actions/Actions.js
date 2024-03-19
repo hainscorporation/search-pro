@@ -1,15 +1,7 @@
-import { SHOW_ALL_ORDERS, ORDER_SEARCH_TERM, FILTER_STATUS, VALIDATE_LOT_ON_PLAN, SAVE_LOT_ON_PLAN } from "../constants/action-types";
+import { FILTER_ORDERS_LIST, VALIDATE_LOT_ON_PLAN, SAVE_LOT_ON_PLAN } from "../constants/action-types";
 
-const ShowAllOrders = (payload) => {
-  return { type: SHOW_ALL_ORDERS, payload }
-}
-
-const SearchOrderByTerm = (payload) => {
-  return { type: ORDER_SEARCH_TERM, payload }
-}
-
-const FilterStatus = (payload) => {
-  return { type: FILTER_STATUS, payload }
+const FilterOrdersList = (payload) => {
+  return { type: FILTER_ORDERS_LIST, payload }
 }
 
 const ValidateLotOnPlan = (payload) => {
@@ -20,5 +12,5 @@ const SaveLotOnPlan = (payload) => {
   return { type: SAVE_LOT_ON_PLAN, payload }
 }
 
-export { ShowAllOrders, SearchOrderByTerm, FilterStatus, ValidateLotOnPlan, SaveLotOnPlan }
+export { FilterOrdersList, ValidateLotOnPlan, SaveLotOnPlan }
 

@@ -1,11 +1,7 @@
 const OrderReducer = (state, action) => {
   switch (action.type) {
-    case 'SHOW_ALL_ORDERS':
-      return { ...state, showAllOrders: action.payload }
-    case 'ORDER_SEARCH_TERM':
-      return  { ...state, searchTerm: action.payload }
-    case 'FILTER_STATUS':
-      return {...state, selectedStatus: action.payload }
+    case 'FILTER_ORDERS_LIST':
+      return { ...state, filters: action.payload}
     default:
       return state
   }

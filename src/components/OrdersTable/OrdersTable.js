@@ -22,7 +22,7 @@ import './OrdersTable.css'
 export default function OrdersTable() {
 
   const [state, dispatch] = useContext(Context)
-  const { showAllOrders, searchTerm, selectedStatus } = state.OrderReducer
+  const { filters } = state.OrderReducer
 
   const [sortOrder, setSortOrder] = useState('asc');
   const [sortBy, setSortBy] = useState('requested');
@@ -34,24 +34,12 @@ export default function OrdersTable() {
 
   // Fetch orders on component mount
   useEffect(() => {
-    fetchOrders()
+    fetchOrders({})
   }, [])
 
   useEffect(() => {
-    fetchOrders()
-  }, [showAllOrders])
-
-  useEffect(() => {
-    filterByStatus({selectedStatus: selectedStatus})
-  }, [selectedStatus])
-
-  useEffect(() => {
-    if (searchTerm === '') {
-      fetchOrders() 
-    } else {
-      fetchFilteredOrdersByTerm({ searchTerm: searchTerm })
-    }
-  }, [searchTerm])
+    fetchOrders(filters)
+  }, [filters])
 
   const visibleRows = useMemo(
     () =>
@@ -64,40 +52,16 @@ export default function OrdersTable() {
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
 
-  // GET all orders list
-  const fetchOrders = async () => {
-    const url = showAllOrders ? 'orders' : 'filtered-orders'
-
+  // GET filtered orders list
+  const fetchOrders = async (filters) => {
     try {
-      const response = await fetch(`http://localhost:8000/${url}`)
-      const data = await response.json()
-      setOrders(data)
-    } catch (error) {
-      console.error('Error fetching orders:', error)
-    }
-  };
-
-  // GET all orders
-  const fetchFilteredOrdersByTerm = async (body) => {
-    try {
-      const response = await axios.post(`http://localhost:8000/orders-by-reference`, body)
-      console.log(response.data)
+      const response = await axios.post(`http://http://spbackend-dev-env.eba-p3a2z3qg.ap-southeast-2.elasticbeanstalk.com/orders`, filters)
       const data = await response.data
       setOrders(data)
     } catch (error) {
       console.error('Error fetching orders:', error)
     }
-  }
-
-  const filterByStatus = async (body) => {
-    try {
-      const response = await axios.post(`http://localhost:8000/orders-by-status`, body)
-      const data = response.data
-      setOrders(data)
-    } catch (error) {
-      console.error('Error fetching orders:', error)
-    }
-  }
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = sortBy === property && sortOrder === 'asc';

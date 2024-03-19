@@ -3,9 +3,7 @@ import reducers from '../reducers/reducers'
 
 const initialState = {
   OrderReducer: {
-    showAllOrders: false,
-    searchTerm: '',
-    selectedStatus: []
+    filters: {}
   },
   FormReducer: {
     lotonplan: '',

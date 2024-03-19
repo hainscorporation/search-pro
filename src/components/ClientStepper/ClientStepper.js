@@ -49,7 +49,7 @@ const ClientStepper = () => {
 
   const validateLotOnPlanExists = async (body) => {
     try {
-      const response = await axios.post(`http://localhost:8000/validate-lot-plan`, body)
+      const response = await axios.post(`http://http://spbackend-dev-env.eba-p3a2z3qg.ap-southeast-2.elasticbeanstalk.com/validate-lot-plan`, body)
       console.log(response.data)
       const data = await response.data
       if (data) {
@@ -62,7 +62,7 @@ const ClientStepper = () => {
 
   const getAvailableSearches = async (body) => {
     try {
-      const response = await axios.post(`http://localhost:8000/available-searches`, body)
+      const response = await axios.post(`http://http://spbackend-dev-env.eba-p3a2z3qg.ap-southeast-2.elasticbeanstalk.com/available-searches`, body)
       console.log(response.data)
       const data = await response.data
     } catch (error) {

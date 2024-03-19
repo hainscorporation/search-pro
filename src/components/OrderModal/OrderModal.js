@@ -25,7 +25,7 @@ export default function OrderModal({ orderId, isOpen, handleClose }) {
   // GET order by id
   const fetchOrderById = async (orderId) => {
     try {
-      const response = await fetch(`http://localhost:8000/orders/${orderId}`);
+      const response = await fetch(`http://http://spbackend-dev-env.eba-p3a2z3qg.ap-southeast-2.elasticbeanstalk.com/orders/${orderId}`);
       const data = await response.json();
       setSelectedOrder(data);
     } catch (error) {
@@ -37,7 +37,7 @@ export default function OrderModal({ orderId, isOpen, handleClose }) {
   const updateOrderField = async (orderId, body) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8000/orders/${orderId}`,
+        `http://http://spbackend-dev-env.eba-p3a2z3qg.ap-southeast-2.elasticbeanstalk.com/orders/${orderId}`,
         body
       );
       /* const data = await response.json();
